@@ -15,7 +15,7 @@ class CreateBlogCategoriesTable extends Migration
     {
         Schema::create('blog_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('parent_id')->unsigned()->default(0)->comment('id родителя');
+            $table->integer('parent_id')->unsigned()->default(1)->comment('id родителя');
 
             $table->string('slug')->unique()->comment('заголовок транслитом');
             $table->string('title')->comment('заголовок');
