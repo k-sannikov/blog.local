@@ -27,7 +27,7 @@ class CreateBlogPostsTable extends Migration
             $table->text('content_raw')->comment('md текст');
             $table->text('content_html')->comment('html текст');
 
-            $table->boolean('is_published')->default(false)->comment('html текст');
+            $table->boolean('is_published')->default(false)->comment('статус публикации');
             $table->timestamp('published_at')->nullable()->comment('дата и время публикации');
 
             $table->timestamps();
