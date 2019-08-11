@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Blog\Admin;
 
 use App\Models\BlogCategory;
-use Illuminate\Http\Request;
 use App\Http\Requests\Blog\Category\BlogCategoryUpdateRequest;
+use App\Http\Requests\Blog\Category\BlogCategoryStoreRequest;
+use Illuminate\Support\Str;
 
 class CategoryController extends BaseController
 {
@@ -38,9 +39,24 @@ class CategoryController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BlogCategoryStoreRequest $request)
     {
-        dd(__METHOD__);
+        $data = $request->all();
+        if (empty($data['slug'])) {
+            $data['slug'] = Str::slug($data['title']);
+        }
+
+        $item = BlogCategory::create($data);
+
+        if ($item) {
+            return redirect()
+                ->route('blog.admin.categories.edit', $item->id)
+                ->with(['message' => ['success' => 'Успешно сохранено',]]);
+        } else {
+            return back()
+                ->withErrors(['message' => 'Ошибка сохранения',])
+                ->withInput();
+        }
     }
 
     /**
@@ -69,10 +85,15 @@ class CategoryController extends BaseController
         $item = BlogCategory::find($id);
         if (empty($item)) {
             return back()
-            ->withErrors(['message' => "Запись id=[{$id}] не найдена" ])
+            ->withErrors(['message' => "Запись id=[{$id}] не найдена",])
             ->withInput();
         }
-            $result = $item->update($request->all());
+        $data = $request->all();
+        if (empty($data['slug'])) {
+            $data['slug'] = Str::slug($data['title']);
+        }
+
+        $result = $item->update($data);
 
         if ($result) {
             return redirect()
@@ -80,7 +101,7 @@ class CategoryController extends BaseController
                 ->with(['message' => ['success' => 'Успешно сохранено',]]);
         } else {
             return back()
-                ->withErrors(['message' => 'Ошибка сохранения'])
+                ->withErrors(['message' => 'Ошибка сохранения',])
                 ->withInput();
         }
     }
