@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <form method="post" action="{{ route('blog.admin.categories.update', $item->id) }}">
-        @method('put')
+    <form method="post" action="{{ route('blog.admin.categories.store') }}">
         @csrf
         <div class="container">
             @include('blog.admin.categories.includes.errors')

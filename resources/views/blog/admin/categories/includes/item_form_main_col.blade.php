@@ -15,17 +15,15 @@
                     <div class="tab-pane active" id="maindata" role="tabpanel">
                         <div class="form-group">
                             <label for="title">Заголовок</label>
-                            <input name="title" value="{{ old('title', $item->title) }}"
+                            <input name="title" value="{{ $item->title ?? old('title') }}"
                                 id="title"
                                 type="text"
-                                class="form-control"
-                                minlength="3"
-                                required>
+                                class="form-control">
                         </div>
 
                         <div class="form-group">
                             <label for="slug">Идентификатор</label>
-                            <input name="slug" value="{{ old('slug', $item->slug) }}"
+                            <input name="slug" value="{{ $item->slug ?? old('slug') }}"
                                 id="slug"
                                 type="text"
                                 class="form-control">
@@ -36,11 +34,12 @@
                             <select name="parent_id"
                                 id="parent_id"
                                 class="form-control"
-                                placeholder="Выберите категорию"
-                                required>
+                                placeholder="Выберите категорию">
                                 @foreach($categoryList as $categoryOption)
                                     <option value="{{ $categoryOption->id }}"
-                                        @if($categoryOption->id == $item->parent_id) selected @endif>
+                                        @if(isset($item))
+                                            @if($categoryOption->id == $item->parent_id) selected @endif
+                                        @endif>
                                         {{ $categoryOption->id }}. {{ $categoryOption->title }}
                                     </option>
                                 @endforeach
@@ -52,7 +51,7 @@
                             <textarea name="description"
                                 id="description"
                                 class="form-control"
-                                rows="3">{{ old('description', $item->description) }}</textarea>
+                                rows="3">{{ $item->description ?? old('description') }}</textarea>
                         </div>
                     </div>
                 </div>

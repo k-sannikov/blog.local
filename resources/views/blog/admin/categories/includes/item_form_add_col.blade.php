@@ -1,4 +1,3 @@
-@if($item->exists)
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
@@ -8,6 +7,7 @@
             </div>
         </div>
     </div>
+    @if(isset($item))
     <br>
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -27,7 +27,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="">Создано</label>
-                        <input type="text" value="{{ $item->craeted_at }}" class="form-control" disabled>
+                        <input type="text" value="{{ $item->created_at }}" class="form-control" disabled>
                     </div>
                     <div class="form-group">
                         <label for="">Изменено</label>
