@@ -2,8 +2,7 @@
 
 namespace App\Http\Requests\Blog\Category;
 
-
-class BlogCategoryUpdateRequest extends BaseRequest
+class BlogCategoryStoreRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +21,8 @@ class BlogCategoryUpdateRequest extends BaseRequest
      */
     public function rules()
     {
-        $id = $this::route('category');
-
         return array_merge_recursive(parent::rules(), [
-            'slug' => ["unique:blog_categories,slug,$id,id",],
+            'slug' => ['unique:blog_categories',],
         ]);
     }
 }
