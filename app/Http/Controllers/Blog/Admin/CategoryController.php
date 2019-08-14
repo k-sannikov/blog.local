@@ -11,13 +11,27 @@ use App\Repositories\BlogCategoryRepository;
 class CategoryController extends BaseController
 {
     /**
+     * @var BlogCategoryRepository
+     */
+    private $blogCategoryRepository;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->blogCategoryRepository = app(BlogCategoryRepository::class);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $paginator = BlogCategory::paginate(15);
+        // $paginator = BlogCategory::paginate(15);
+        $paginator = $this->blogCategoryRepository->getAllWithPaginate(5);
+
 
         return view('blog.admin.categories.index', compact('paginator'));
     }
@@ -29,7 +43,7 @@ class CategoryController extends BaseController
      */
     public function create()
     {
-        $categoryList = BlogCategory::all();
+        $categoryList = $this->blogCategoryRepository->getForSelect();
 
         return view('blog.admin.categories.create', compact('categoryList'));
     }
@@ -64,14 +78,14 @@ class CategoryController extends BaseController
      * Show the form for editing the specified resource.
      *
      * @param  integer  $id
-     * @param  BlogCategoryRepository  $CategoryRepository
+     *
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, BlogCategoryRepository $categoryRepository)
+    public function edit($id)
     {
+        $item = $this->blogCategoryRepository->getEdit($id);
 
-        $item = $categoryRepository->getEdit($id);
-        $categoryList = $categoryRepository->getForComboBox();
+        $categoryList = $this->blogCategoryRepository->getForSelect();
 
         if (empty($item)) {
             abort(404);
@@ -89,7 +103,8 @@ class CategoryController extends BaseController
      */
     public function update(BlogCategoryUpdateRequest $request, $id)
     {
-        $item = BlogCategory::find($id);
+        $item = $this->blogCategoryRepository->getEdit($id);
+
         if (empty($item)) {
             return back()
             ->withErrors(['message' => "Запись id=[{$id}] не найдена",])
