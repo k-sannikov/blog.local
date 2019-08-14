@@ -1,3 +1,4 @@
+{{-- Вывод списка ошибок --}}
 @if(!is_null($errors->all()))
     @foreach($errors->all() as $error)
         <div class="row justify-content-center">

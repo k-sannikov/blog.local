@@ -19,6 +19,9 @@ abstract class CoreRepository
      */
     protected $model;
 
+    /**
+     * CoreRepository constructor
+     */
     public function __construct()
     {
         $this->model = app($this->getModelClass());

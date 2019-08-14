@@ -1,3 +1,4 @@
+{{-- Вывод списка уведомлений --}}
 @if(!is_null(session('message')))
     @foreach(session('message') as $message)
         <div class="row justify-content-center">
