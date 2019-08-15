@@ -41,6 +41,8 @@ class BlogPostRepository extends CoreRepository
         $result = $this->startConditions()
             ->select($columns)
             ->orderBy('id', 'desc')
+            //активная загрузка отношений
+            ->with(['category:id,title', 'user:id,name'])
             ->paginate($perPage);
 
         return $result;
