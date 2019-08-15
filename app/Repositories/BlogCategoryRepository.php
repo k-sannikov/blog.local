@@ -17,6 +17,25 @@ class BlogCategoryRepository extends CoreRepository
     {
         return Model::class;
     }
+
+    /**
+     * Получить категорию для вывода пагинатором
+     *
+     * @param integer|null $perPage
+     *
+     * @return \Illuminate\Contracts\Pagination\Paginator
+     */
+
+    public function getAllWithPaginate($perPage = null)
+    {
+        $columns = ['id', 'title', 'parent_id'];
+        $result = $this
+            ->startConditions()
+            ->paginate($perPage, $columns);
+
+        return $result;
+    }
+
     /**
      * Получить модель для редактирования в админке
      *
@@ -51,23 +70,6 @@ class BlogCategoryRepository extends CoreRepository
             ->select(['id', 'title'])
             ->toBase()
             ->get();
-
-        return $result;
-    }
-
-    /**
-     * Получить категорию для вывода пагинатором
-     *
-     * @param integer|null $perPage
-     *
-     * @return \Illuminate\Contracts\Pagination\Paginator
-     */
-    public function getAllWithPaginate($perPage = null)
-    {
-        $columns = ['id', 'title', 'parent_id'];
-        $result = $this
-            ->startConditions()
-            ->paginate($perPage, $columns);
 
         return $result;
     }
