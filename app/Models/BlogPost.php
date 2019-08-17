@@ -10,6 +10,22 @@ class BlogPost extends Model
     use SoftDeletes;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title',
+        'slug',
+        'category_id',
+        'excerpt',
+        'content_raw',
+        'is_published',
+        'published_at',
+        'user_id',
+    ];
+
+    /**
      * Категория статьи
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
