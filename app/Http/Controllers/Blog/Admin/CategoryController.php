@@ -55,12 +55,7 @@ class CategoryController extends BaseController
      */
     public function store(BlogCategoryStoreRequest $request)
     {
-        $data = $request->all();
-        if (empty($data['slug'])) {
-            $data['slug'] = Str::slug($data['title']);
-        }
-
-        $item = BlogCategory::create($data);
+        $item = BlogCategory::create($request->all());
 
         if ($item) {
             return redirect()
