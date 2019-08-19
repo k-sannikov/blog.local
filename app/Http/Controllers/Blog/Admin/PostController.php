@@ -7,6 +7,7 @@ use App\Repositories\BlogPostRepository;
 use App\Repositories\BlogCategoryRepository;
 use Illuminate\Http\Request;
 use App\Http\Requests\Blog\Posts\BlogPostUpdateRequest;
+use App\Http\Requests\Blog\Posts\BlogPostStoreRequest;
 
 class PostController extends BaseController
 {
@@ -47,7 +48,9 @@ class PostController extends BaseController
      */
     public function create()
     {
-        dd(__METHOD__);
+        $categoryList = $this->blogCategoryRepository->getForSelect();
+
+        return view('blog.admin.posts.create', compact('categoryList'));
     }
 
     /**
@@ -56,9 +59,19 @@ class PostController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BlogPostStoreRequest $request)
     {
-        dd(__METHOD__);
+        $item = BlogPost::create($request->all());
+
+        if ($item) {
+            return redirect()
+                ->route('blog.admin.posts.edit', $item->id)
+                ->with(['message' => ['success' => 'Успешно сохранено',]]);
+        } else {
+            return back()
+                ->withErrors(['message' => 'Ошибка сохранения',])
+                ->withInput();
+        }
     }
 
     /**

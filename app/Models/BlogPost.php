@@ -9,6 +9,8 @@ class BlogPost extends Model
 {
     use SoftDeletes;
 
+    const UNKNOWN_USER = 2;
+
     /**
      * The attributes that are mass assignable.
      *
