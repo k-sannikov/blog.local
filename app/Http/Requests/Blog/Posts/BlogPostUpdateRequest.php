@@ -25,6 +25,7 @@ class BlogPostUpdateRequest extends BaseRequest
         $id = $this::route('post');
 
         return array_merge_recursive(parent::rules(), [
+            'title' => ["unique:blog_posts,title,$id,id",],
             'slug' => ["unique:blog_posts,slug,$id,id",],
         ]);
     }

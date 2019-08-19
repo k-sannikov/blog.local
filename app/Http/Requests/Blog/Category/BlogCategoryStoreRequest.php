@@ -22,6 +22,7 @@ class BlogCategoryStoreRequest extends BaseRequest
     public function rules()
     {
         return array_merge_recursive(parent::rules(), [
+            'title' => ['unique:blog_categories',],
             'slug' => ['unique:blog_categories',],
         ]);
     }

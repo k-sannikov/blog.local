@@ -25,6 +25,7 @@ class BlogCategoryUpdateRequest extends BaseRequest
         $id = $this::route('category');
 
         return array_merge_recursive(parent::rules(), [
+            'title' => ["unique:blog_categories,title,$id,id",],
             'slug' => ["unique:blog_categories,slug,$id,id",],
         ]);
     }
