@@ -31,6 +31,8 @@ class BlogCategoryRepository extends CoreRepository
         $columns = ['id', 'title', 'parent_id'];
         $result = $this
             ->startConditions()
+            //активная загрузка отношений
+            ->with(['parentCategory:id,title'])
             ->paginate($perPage, $columns);
 
         return $result;
