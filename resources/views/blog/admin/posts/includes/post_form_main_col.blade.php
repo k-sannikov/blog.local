@@ -2,8 +2,12 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                @if($item->is_published)
-                    Опубликовано
+                @if (isset($item))
+                    @if($item->is_published)
+                        Опубликовано
+                    @else
+                        Черновик
+                    @endif
                 @else
                     Черновик
                 @endif
@@ -86,9 +90,12 @@
                                 type="checkbox"
                                 class="form-check-input"
                                 value="1"
-                                @if($item->is_published)
-                                    checked="checked"
+                                @if (isset($item))
+                                    @if($item->is_published)
+                                        checked="checked"
+                                    @endif
                                 @endif
+
                             >
                             <label class="form-check-label" for="is_published">Опубликовано</label>
                         </div>

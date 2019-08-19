@@ -4,8 +4,7 @@
     <form method="post" action="{{ route('blog.admin.posts.store') }}">
         @csrf
         <div class="container">
-            @include('blog.admin.categories.includes.errors')
-            @include('blog.admin.categories.includes.notifications')
+            @include('blog.admin.categories.includes.result_messages')
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     @include('blog.admin.posts.includes.post_form_main_col')
